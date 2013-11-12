@@ -106,8 +106,11 @@
                     self.$element.trigger('dropdown::onChange', $(this));
                     self.hide();
                     return false;
+                }).on('mousedown.dropdown',function() {
+                    return false;
                 });
-                $(document).on('click.dropdown', function() {
+
+                $(document).on('mousedown.dropdown', function() {
                     self.hide();
                     return false;
                 });
@@ -118,8 +121,8 @@
             });
         },
         _unbindActionEvent: function() {
-            this.$panel.off('click.dropdown');
-            $(document).off('click.dropdown');
+            this.$panel.off('click.dropdown').off('mousedown.dropdown');
+            $(document).off('mousedown.dropdown');
             $(window).off('resize.dropdown');
         },
         _position: function() {
