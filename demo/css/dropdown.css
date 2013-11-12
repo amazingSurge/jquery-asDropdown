@@ -1,0 +1,10 @@
+.dropdwon-trigger {
+
+}
+.dropdown-panel {
+  display: none;
+  position: absolute;
+}
+.dropdown-panel.dropdown_show {
+  display: block;
+}

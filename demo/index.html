@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Dropdown</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/prism.css">
+        <link rel="stylesheet" href="css/main.css">       
+        <link rel="stylesheet" href="css/dropdown.css">
+
+        <script src="js/vendor/jquery-1.9.1.min.js"></script>
+        <script src="js/vendor/jquery.toc.js"></script>
+        <script src="js/vendor/prism.js"></script>
+        <script src="js/vendor/bootstrap.js"></script>
+        <script src="../src/jquery-dropdown.js"></script>
+        <style type="text/css">
+            .example div {
+                display: inline-block;
+                border: 1px solid #555;
+            }
+            .example ul {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+        </style>
+    </head>
+<body>
+<!--[if lt IE 7]>
+    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+
+<div id="toc"></div>
+<div id="wrapper">
+    <section>
+        <h2>demo</h2>
+        
+        <section>
+            <h4>Default</h4>
+            <pre class="has-example"><code class="language-javascript">
+&lt;div class=&quot;dropdown-wrap&quot;&gt;
+    &lt;div class=&quot;dropdown-example&quot;&gt;click me&lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;items-1&lt;/li&gt;
+        &lt;li&gt;items-2&lt;/li&gt;
+        &lt;li&gt;items-3&lt;/li&gt;
+        &lt;li&gt;items-4&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;                   
+    $(document).ready(function() {
+        $('.dropdown-example').dropdown();          
+    });
+&lt;/script&gt;
+</code></pre>
+            <div class="example">
+                <div class="dropdown-wrap">
+                    <div class="dropdown-example">click me</div>
+                    <ul>
+                        <li>items-1</li>
+                        <li>items-2</li>
+                        <li>items-3</li>
+                        <li>items-4</li>
+                    </ul>
+                </div>
+                <script>                   
+                    $(document).ready(function() {
+                        $('.dropdown-example').dropdown();          
+                    });
+                </script>
+            </div>
+        </section>  
+
+        <section>
+            <h4>onChange</h4>
+            <pre class="has-example"><code class="language-javascript">
+&lt;div class=&quot;dropdown-wrap&quot;&gt;
+    &lt;div class=&quot;dropdown-onChange&quot;&gt;click me&lt;/div&gt;
+    &lt;ul class=&quot;onChange&quot;&gt;
+        &lt;li&gt;items-1&lt;/li&gt;
+        &lt;li&gt;items-2&lt;/li&gt;
+        &lt;li&gt;items-3&lt;/li&gt;
+        &lt;li&gt;items-4&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;                   
+    $(document).ready(function() {
+        $('.dropdown-onChange').dropdown({
+            panel: '.onChange',
+            onChange: function($selected) {
+                console.log('selected ' + $selected.text());
+            }
+        });          
+    });
+&lt;/script&gt;
+</code></pre>
+            <p>so you can see the output in the console</p>
+            <div class="example">
+                <div class="dropdown-wrap">
+                    <div class="dropdown-onChange">click me</div>
+                    <ul class="onChange">
+                        <li>items-1</li>
+                        <li>items-2</li>
+                        <li>items-3</li>
+                        <li>items-4</li>
+                    </ul>
+                </div>
+                <script>                   
+                    $(document).ready(function() {
+                        $('.dropdown-onChange').dropdown({
+                            panel: '.onChange',
+                            onChange: function($selected) {
+                                console.log('selected ' + $selected.text());
+                            }
+                        });          
+                    });
+                </script>
+            </div>
+        </section> 
+
+
+        <section>
+            <h4>panel selector</h4>
+            <pre class="has-example"><code class="language-javascript">
+&lt;div class=&quot;dropdown-wrap&quot;&gt;
+    &lt;div class=&quot;dropdown-selector&quot;&gt;click me&lt;/div&gt;
+    &lt;ul class=&quot;dropdown-content&quot;&gt;
+        &lt;li&gt;items-1&lt;/li&gt;
+        &lt;li&gt;items-2&lt;/li&gt;
+        &lt;li&gt;items-3&lt;/li&gt;
+        &lt;li&gt;items-4&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;                   
+    $(document).ready(function() {
+        $('.dropdown-selector').dropdown({
+            panel: '.dropdown-content'
+        });          
+    });
+&lt;/script&gt;
+</code></pre>
+            <div class="example">
+                <div class="dropdown-wrap">
+                    <div class="dropdown-selector">click me</div>
+                    <ul class="dropdown-content">
+                        <li>items-1</li>
+                        <li>items-2</li>
+                        <li>items-3</li>
+                        <li>items-4</li>
+                    </ul>
+                </div>
+                <script>                   
+                    $(document).ready(function() {
+                        $('.dropdown-selector').dropdown({
+                            panel: '.dropdown-content'
+                        });          
+                    });
+                </script>
+            </div>
+        </section> 
+        <section>
+            <h4>clickoutHide</h4>
+            <pre class="has-example"><code class="language-javascript">
+&lt;div class=&quot;dropdown-wrap&quot;&gt;
+    &lt;div class=&quot;dropdown-click&quot;&gt;click me&lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;items-1&lt;/li&gt;
+        &lt;li&gt;items-2&lt;/li&gt;
+        &lt;li&gt;items-3&lt;/li&gt;
+        &lt;li&gt;items-4&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;                   
+    $(document).ready(function() {
+        $('.dropdown-click').dropdown({
+            clickoutHide: false
+        });          
+    });
+&lt;/script&gt;
+</code></pre>
+            <div class="example">
+                <div class="dropdown-wrap">
+                    <div class="dropdown-click">click me</div>
+                    <ul>
+                        <li>items-1</li>
+                        <li>items-2</li>
+                        <li>items-3</li>
+                        <li>items-4</li>
+                    </ul>
+                </div>
+                <script>                   
+                    $(document).ready(function() {
+                        $('.dropdown-click').dropdown({
+                            clickoutHide: false
+                        });          
+                    });
+                </script>
+            </div>
+        </section> 
+
+    </section>
+    
+      
+        
+        
+    
+</div>
+
+<script>
+(function(){
+    $('#toc').toc();
+    })();
+</script>
+</body>
+</html>
+
+

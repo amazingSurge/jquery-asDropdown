@@ -1,0 +1,36 @@
+{
+  "name": "jquery-dropdown",
+  "title": "jquery dropdown",
+  "description": "a custom style dropdown plugin",
+  "version": "0.1.1",
+  "homepage": "https://github.com/amazingSurge/jquery-dropdown",
+  "author": {
+    "name": "amazingSurge",
+    "email": "amazingSurge@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amazingSurge/jquery-dropdown.git"
+  },
+  "bugs": "https://github.com/amazingSurge/jquery-dropdown/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/amazingSurge/jquery-dropdown/blob/master/LICENSE-MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-qunit": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt": "~0.4.0",
+    "grunt-jsbeautifier": "~0.1.5",
+    "grunt-recess": "~0.3.1"
+  },
+  "dependencies": {
+    "grunt-text-replace": "~0.3.6"
+  }
+}
