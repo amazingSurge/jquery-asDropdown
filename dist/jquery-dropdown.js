@@ -1,4 +1,4 @@
-/*! jquery dropdown - v0.1.1 - 2013-11-12
+/*! jquery dropdown - v0.1.1 - 2013-11-13
 * https://github.com/amazingSurge/jquery-dropdown
 * Copyright (c) 2013 amazingSurge; Licensed MIT */
 (function($) {
@@ -101,8 +101,11 @@
                     self.$element.trigger('dropdown::onChange', $(this));
                     self.hide();
                     return false;
+                }).on('mousedown.dropdown',function() {
+                    return false;
                 });
-                $(document).on('click.dropdown', function() {
+
+                $(document).on('mousedown.dropdown', function() {
                     self.hide();
                     return false;
                 });
@@ -113,8 +116,8 @@
             });
         },
         _unbindActionEvent: function() {
-            this.$panel.off('click.dropdown');
-            $(document).off('click.dropdown');
+            this.$panel.off('click.dropdown').off('mousedown.dropdown');
+            $(document).off('mousedown.dropdown');
             $(window).off('resize.dropdown');
         },
         _position: function() {
