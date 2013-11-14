@@ -172,6 +172,7 @@
         skin: null,
         panel: '+', //jquery selector to find content in the page, or '+' means adjacent siblings
         clickoutHide: true, //When clicking outside of the dropdown, trigger hide event
+        trigger: 'click', // TODO: set the way to triiger, 'click' or 'hover' 
 
         //callback comes with corresponding event
         onInit: null,

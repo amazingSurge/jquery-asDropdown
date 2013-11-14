@@ -6,6 +6,8 @@
  * Licensed under the MIT license.
  */
 
+/* global jQuery */
+
 (function($) {
 
     var Dropdown = $.dropdown = function(element, options) {
@@ -27,6 +29,7 @@
             skin: this.namespace + '_' + this.options.skin,
             show: this.namespace + '_show',
             trigger: this.namespace + '-trigger',
+            mask: this.namespace + '-mask',
             panel: this.namespace + '-panel'
         };
 
@@ -37,6 +40,10 @@
 
         // content
         this.$panel = this._parse(this.options.panel);
+
+        // add mask
+        var $mask = $('.' + this.classes.mask);
+        this.$mask =  $mask.length ? $mask : $('<div style="display:none"></div>').addClass(this.classes.mask).appendTo(this.$parent);
 
         //state
         this.isShow = false;
@@ -99,18 +106,15 @@
             var self = this;
             if (this.options.clickoutHide) {
                 // this is a bit of a hack until we have a better way to close the panel
-                self.$panel.on('click.dropdown', 'li', function() {
+                this.$mask.css({display: 'block'}).on('click.dropdown', function() {
+                    self.hide();
+                    return false;
+                });
+                this.$panel.on('click.dropdown', 'li', function() {
                     if (typeof self.options.onChange === 'function') {
                         self.options.onChange($(this));
                     }
                     self.$element.trigger('dropdown::onChange', $(this));
-                    self.hide();
-                    return false;
-                }).on('mousedown.dropdown',function() {
-                    return false;
-                });
-
-                $(document).on('mousedown.dropdown', function() {
                     self.hide();
                     return false;
                 });
@@ -123,7 +127,7 @@
         _unbindActionEvent: function() {
             this.$panel.off('click.dropdown').off('mousedown.dropdown');
             $(document).off('mousedown.dropdown');
-            $(window).off('resize.dropdown');
+            this.$mask.css({display: 'none'}).off('click.dropdown');
         },
         _position: function() {
             var offset = this.$element.offset(),
