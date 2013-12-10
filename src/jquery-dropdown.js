@@ -41,7 +41,7 @@
         // content
         this.$panel = this._parse(this.options.panel);
 
-        // add mask
+        // add mask after panel element
         var $mask = $('.' + this.classes.mask);
         this.$mask =  $mask.length ? $mask : $('<div style="display:none"></div>').addClass(this.classes.mask).appendTo(this.$parent);
 
@@ -65,7 +65,7 @@
                 return false;
             });
             if (typeof this.options.onInit === 'function') {
-                this.options.onInit(this);
+                this.options.onInit.call(this,this);
             }
             this.$element.trigger('dropdown::init', this);
         },
@@ -81,7 +81,7 @@
             this._position();
 
             if (typeof this.options.onShow === 'function') {
-                this.options.onShow(this);
+                this.options.onShow.call(this,this);
             }
             this.$element.trigger('dropdown::show', this);
         },
@@ -91,7 +91,7 @@
             this.$panel.removeClass(this.classes.show);
             this._unbindActionEvent();
             if (typeof this.options.onHide === 'function') {
-                this.options.onHide(this);
+                this.options.onHide.call(this,this);
             }
             this.$element.trigger('dropdown::hide', this);
         },
@@ -112,7 +112,7 @@
                 });
                 this.$panel.on('click.dropdown', 'li', function() {
                     if (typeof self.options.onChange === 'function') {
-                        self.options.onChange($(this));
+                        self.options.onChange.call(self, $(this));
                     }
                     self.$element.trigger('dropdown::onChange', $(this));
                     self.hide();
