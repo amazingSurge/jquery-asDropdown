@@ -1,6 +1,8 @@
-/*! jquery dropdown - v0.1.1 - 2013-11-13
+/*! jquery dropdown - v0.1.1 - 2013-12-11
 * https://github.com/amazingSurge/jquery-dropdown
 * Copyright (c) 2013 amazingSurge; Licensed MIT */
+/* global jQuery */
+
 (function($) {
 
     var Dropdown = $.dropdown = function(element, options) {
@@ -22,7 +24,10 @@
             skin: this.namespace + '_' + this.options.skin,
             show: this.namespace + '_show',
             trigger: this.namespace + '-trigger',
-            panel: this.namespace + '-panel'
+            mask: this.namespace + '-mask',
+            wrapper: this.namespace +  '-wrapper',
+            panel: this.namespace + '-panel',
+            disabled: this.namespace + '_disabled'
         };
 
         // skin
@@ -30,12 +35,14 @@
             this.$element.addClass(this.classes.skin);
         }
 
+        this.$children = this.$element.children();
+
         // content
         this.$panel = this._parse(this.options.panel);
 
         //state
         this.isShow = false;
-        this.enabled = true;
+        this.disabled = false;
 
         //init
         this.init();
@@ -45,23 +52,45 @@
         constructor: Dropdown,
         init: function() {
             var self = this;
-            this.$parent.css({position:'relative'});
+            this.$parent.addClass(this.classes.wrapper);
             this.$element.addClass(this.namespace).addClass(this.classes.trigger);
             this.$panel.addClass(this.classes.panel);
+
             this.$element.on('click.dropdown', function() {
                 self.toggle.call(self);
                 return false;
             });
+
+            this.$panel.on('click.dropdown', 'li', function() {
+                if (typeof self.options.onChange === 'function') {
+                    self.options.onChange.call(self, $(this));
+                }
+                if (self.options.imitateSelect) {
+                    self.setText($(this));
+                }
+                self.$element.trigger('dropdown::onChange', $(this));
+                self.hide();
+                return false;
+            });
+
             if (typeof this.options.onInit === 'function') {
-                this.options.onInit(this);
+                this.options.onInit.call(this,this);
             }
             this.$element.trigger('dropdown::init', this);
         },
         show: function() {
-            if (this.enabled === false) {
+            var self = this;
+            if (this.disabled) {
                 return;
             }
-            this._bindActionEvent();
+            if (this.options.clickoutHide) {
+                this._generateMask();
+            }
+            
+            $(window).on('resize.dropdown', function() {
+                self._position();
+                return false;
+            });
             this.isShow = true;
             this.$element.addClass(this.classes.show);
             this.$panel.addClass(this.classes.show);
@@ -69,19 +98,45 @@
             this._position();
 
             if (typeof this.options.onShow === 'function') {
-                this.options.onShow(this);
+                this.options.onShow.call(this,this);
             }
             this.$element.trigger('dropdown::show', this);
         },
         hide: function() {
             this.isShow = false;
+            if (this.options.clickoutHide) {
+                this._clearMask();
+            }
+            
             this.$element.removeClass(this.classes.show);
             this.$panel.removeClass(this.classes.show);
-            this._unbindActionEvent();
+            $(document).off('mousedown.dropdown');
+
             if (typeof this.options.onHide === 'function') {
-                this.options.onHide(this);
+                this.options.onHide.call(this,this);
             }
             this.$element.trigger('dropdown::hide', this);
+        },
+        setText: function($item) {
+            this.$element.text($item.text());
+            if (this.$children.length) {
+                this.$children.appendTo(this.$element);
+            }
+        },
+        _generateMask: function() {
+            var self = this;
+            this.$mask = $('<div></div>').addClass(this.classes.mask).appendTo(this.$parent);
+            this.$mask.on('click.dropdown',function() {
+                self.hide();
+                return false;
+            });
+        },
+        _clearMask: function() {
+            if (this.$mask) {
+                this.$mask.off('.dropdown');
+                this.$mask.remove();
+                this.$mask = null;
+            }
         },
         toggle: function() {
             if (this.isShow) {
@@ -89,36 +144,6 @@
             } else {
                 this.show();
             } 
-        },
-        _bindActionEvent: function() {
-            var self = this;
-            if (this.options.clickoutHide) {
-                // this is a bit of a hack until we have a better way to close the panel
-                self.$panel.on('click.dropdown', 'li', function() {
-                    if (typeof self.options.onChange === 'function') {
-                        self.options.onChange($(this));
-                    }
-                    self.$element.trigger('dropdown::onChange', $(this));
-                    self.hide();
-                    return false;
-                }).on('mousedown.dropdown',function() {
-                    return false;
-                });
-
-                $(document).on('mousedown.dropdown', function() {
-                    self.hide();
-                    return false;
-                });
-            }
-            $(window).on('resize.dropdown', function() {
-                self._position();
-                return false;
-            });
-        },
-        _unbindActionEvent: function() {
-            this.$panel.off('click.dropdown').off('mousedown.dropdown');
-            $(document).off('mousedown.dropdown');
-            $(window).off('resize.dropdown');
         },
         _position: function() {
             var offset = this.$element.offset(),
@@ -154,10 +179,12 @@
 
         // common  method
         enable: function() {
-            this.enabled = true;
+            this.disabled = false;
+            this.$wrapper.removeClass(this.classes.disabled);
         },
         disable: function() {
-            this.enabled = false;
+            this.disabled = true;
+            this.$wrapper.addClass(this.classes.disabled);d
         },
         destory: function() {
             this.hide();
@@ -172,7 +199,7 @@
         skin: null,
         panel: '+', //jquery selector to find content in the page, or '+' means adjacent siblings
         clickoutHide: true, //When clicking outside of the dropdown, trigger hide event
-        trigger: 'click', // TODO: set the way to triiger, 'click' or 'hover' 
+        imitateSelect: false,//let select value show in trigger bar
 
         //callback comes with corresponding event
         onInit: null,
