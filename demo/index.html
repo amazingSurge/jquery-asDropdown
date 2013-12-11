@@ -204,6 +204,46 @@
             </div>
         </section> 
 
+        <section>
+            <h4>imitateSelect</h4>
+            <pre class="has-example"><code class="language-javascript">
+&lt;div class=&quot;dropdown-wrap&quot;&gt;
+    &lt;div class=&quot;dropdown-imitateSelect&quot;&gt;click me&lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;items-1&lt;/li&gt;
+        &lt;li&gt;items-2&lt;/li&gt;
+        &lt;li&gt;items-3&lt;/li&gt;
+        &lt;li&gt;items-4&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;                   
+    $(document).ready(function() {
+        $('.dropdown-click').dropdown({
+            imitateSelect: true
+        });          
+    });
+&lt;/script&gt;
+</code></pre>
+            <div class="example">
+                <div class="dropdown-wrap">
+                    <div class="dropdown-imitateSelect">click me</div>
+                    <ul>
+                        <li>items-1</li>
+                        <li>items-2</li>
+                        <li>items-3</li>
+                        <li>items-4</li>
+                    </ul>
+                </div>
+                <script>                   
+                    $(document).ready(function() {
+                        $('.dropdown-imitateSelect').dropdown({
+                            imitateSelect: true
+                        });          
+                    });
+                </script>
+            </div>
+        </section> 
+
     </section>
     
       

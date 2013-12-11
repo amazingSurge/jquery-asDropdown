@@ -1,6 +1,9 @@
 .dropdwon-trigger {
 
 }
+.dropdown-wrapper {
+    position: relative;
+}
 .dropdown-panel {
   display: none;
   position: absolute;
