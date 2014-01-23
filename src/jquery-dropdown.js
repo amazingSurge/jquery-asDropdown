@@ -78,6 +78,7 @@
             }
 
             this._trigger('ready');
+            this.initialized = true;
         },
         _trigger: function(eventType) {
             // event
