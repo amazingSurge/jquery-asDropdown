@@ -30,7 +30,7 @@
             show: this.namespace + '_show',
             trigger: this.namespace + '-trigger',
             mask: this.namespace + '-mask',
-            wrapper: this.namespace +  '-wrapper',
+            wrapper: this.namespace + '-wrapper',
             panel: this.namespace + '-panel',
             disabled: this.namespace + '_disabled'
         };
@@ -48,8 +48,9 @@
         //state
         this.isShow = false;
         this.disabled = false;
-
+        this.initialized = false;
         //init
+        this._trigger('init');
         this.init();
     };
 
@@ -67,22 +68,32 @@
             });
 
             this.$panel.on('click.dropdown', 'li', function() {
-                if (typeof self.options.onChange === 'function') {
-                    self.options.onChange.call(self, $(this));
-                }
-                if (self.options.imitateSelect) {
-                    self.setText($(this));
-                }
-                self.$element.trigger('dropdown::onChange', $(this));
+                self.set($(this));
                 self.hide();
                 return false;
             });
 
-            if (typeof this.options.onInit === 'function') {
-                this.options.onInit.call(this,this);
+            if (typeof this.options.select === 'number') {
+                this.set(this.$panel.children().eq(this.options.select));
             }
-            this.$element.trigger('dropdown::init', this);
+
+            this._trigger('ready');
         },
+        _trigger: function(eventType) {
+            // event
+            this.$element.trigger('dropdown::' + eventType, this);
+
+            // callback
+            eventType = eventType.replace(/\b\w+\b/g, function(word) {
+                return word.substring(0, 1).toUpperCase() + word.substring(1);
+            });
+            var onFunction = 'on' + eventType;
+            var method_arguments = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+            if (typeof this.options[onFunction] === 'function') {
+                this.options[onFunction].apply(this, method_arguments);
+            }
+        },
+
         show: function() {
             var self = this;
             if (this.disabled) {
@@ -91,7 +102,7 @@
             if (this.options.clickoutHide) {
                 this._generateMask();
             }
-            
+
             $(window).on('resize.dropdown', function() {
                 self._position();
                 return false;
@@ -99,39 +110,40 @@
             this.isShow = true;
             this.$element.addClass(this.classes.show);
             this.$panel.addClass(this.classes.show);
-            
-            this._position();
 
-            if (typeof this.options.onShow === 'function') {
-                this.options.onShow.call(this,this);
-            }
-            this.$element.trigger('dropdown::show', this);
+            this._position();
+            this._trigger('show');
         },
         hide: function() {
             this.isShow = false;
             if (this.options.clickoutHide) {
                 this._clearMask();
             }
-            
+
             this.$element.removeClass(this.classes.show);
             this.$panel.removeClass(this.classes.show);
             $(document).off('mousedown.dropdown');
 
-            if (typeof this.options.onHide === 'function') {
-                this.options.onHide.call(this,this);
-            }
-            this.$element.trigger('dropdown::hide', this);
+            this._trigger('hide');
         },
-        setText: function($item) {
-            this.$element.text($item.text());
-            if (this.$children.length) {
-                this.$children.appendTo(this.$element);
+        set: function($item) {
+            if (this.options.imitateSelect) {
+                if ($item.length === 0) {
+                    return;
+                }
+                this.$element.text($item.text());
+                if (this.$children.length) {
+                    this.$children.appendTo(this.$element);
+                }
+            }
+            if (this.initialized) {
+                this._trigger('change', $item);
             }
         },
         _generateMask: function() {
             var self = this;
             this.$mask = $('<div></div>').addClass(this.classes.mask).appendTo(this.$parent);
-            this.$mask.on('click.dropdown',function() {
+            this.$mask.on('click.dropdown', function() {
                 self.hide();
                 return false;
             });
@@ -148,7 +160,7 @@
                 this.hide();
             } else {
                 this.show();
-            } 
+            }
         },
         _position: function() {
             var offset = this.$element.offset(),
@@ -159,7 +171,7 @@
                 top, left;
 
             if (panelHeight + height + offset.top > $(window).height() + $(window).scrollTop()) {
-                top =  - panelHeight;
+                top = -panelHeight;
             } else {
                 top = height;
             }
@@ -189,7 +201,7 @@
         },
         disable: function() {
             this.disabled = true;
-            this.$wrapper.addClass(this.classes.disabled);d
+            this.$wrapper.addClass(this.classes.disabled);
         },
         destory: function() {
             this.hide();
@@ -204,7 +216,8 @@
         skin: null,
         panel: '+', //jquery selector to find content in the page, or '+' means adjacent siblings
         clickoutHide: true, //When clicking outside of the dropdown, trigger hide event
-        imitateSelect: false,//let select value show in trigger bar
+        imitateSelect: false, //let select value show in trigger bar
+        select: null, //set initial select value, when imitateSelect is set to true
 
         //callback comes with corresponding event
         onInit: null,
