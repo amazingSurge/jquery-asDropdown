@@ -63,15 +63,17 @@
                 <div class="dropdown-wrap">
                     <div class="dropdown-example">click me</div>
                     <ul>
-                        <li>items-1</li>
-                        <li>items-2</li>
-                        <li>items-3</li>
-                        <li>items-4</li>
+                        <li data-value="1">items-1</li>
+                        <li data-value="2">items-2</li>
+                        <li data-value="3">items-3</li>
+                        <li data-value="4">items-4</li>
                     </ul>
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-example').dropdown();          
+                        $('.dropdown-example').dropdown({
+                            select: 3
+                        });          
                     });
                 </script>
             </div>
@@ -105,16 +107,18 @@
                 <div class="dropdown-wrap">
                     <div class="dropdown-onChange">click me</div>
                     <ul class="onChange">
-                        <li>items-1</li>
-                        <li>items-2</li>
-                        <li>items-3</li>
-                        <li>items-4</li>
+                        <li data-category="sport">items-1</li>
+                        <li data-category="news">items-2</li>
+                        <li data-category="info">items-3</li>
                     </ul>
                 </div>
                 <script>                   
                     $(document).ready(function() {
                         $('.dropdown-onChange').dropdown({
                             panel: '.onChange',
+                            data: 'category',
+                            select: 'news',
+                            imitateSelect: true,
                             onChange: function($selected) {
                                 console.log('selected ' + $selected.text());
                             }
