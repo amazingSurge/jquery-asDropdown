@@ -9,7 +9,6 @@
 /* global jQuery */
 
 (function($) {
-
     var Dropdown = $.dropdown = function(element, options) {
         this.element = element;
         this.$element = $(element);
@@ -68,7 +67,7 @@
             });
 
             this.$panel.on('click.dropdown', 'li', function() {
-                self.set($(this));
+                self.set($(this).data(self.options.data));
                 self.hide();
                 return false;
             });
@@ -132,8 +131,8 @@
                 var $item = null;
                 var self = this;
 
-                self.$panel.children().each(function(){
-                    if($(this).data(self.options.data) === value){
+                self.$panel.children().each(function() {
+                    if ($(this).data(self.options.data) === value) {
                         $item = $(this);
                     }
                 });

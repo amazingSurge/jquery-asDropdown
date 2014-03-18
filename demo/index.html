@@ -116,11 +116,8 @@
                     $(document).ready(function() {
                         $('.dropdown-onChange').dropdown({
                             panel: '.onChange',
-                            data: 'category',
-                            select: 'news',
-                            imitateSelect: true,
-                            onChange: function($selected) {
-                                console.log('selected ' + $selected.text());
+                            onChange: function(value) {
+                                console.log('selected ' + value);
                             }
                         });          
                     });
@@ -233,15 +230,16 @@
                 <div class="dropdown-wrap">
                     <div class="dropdown-imitateSelect">click me</div>
                     <ul>
-                        <li>items-1</li>
-                        <li>items-2</li>
-                        <li>items-3</li>
-                        <li>items-4</li>
+                        <li data-category="sport">items-1</li>
+                        <li data-category="news">items-2</li>
+                        <li data-category="info">items-3</li>
                     </ul>
                 </div>
                 <script>                   
                     $(document).ready(function() {
                         $('.dropdown-imitateSelect').dropdown({
+                            data: 'category',
+                            select: 'news',
                             imitateSelect: true,
                             select: 0
                         });          
