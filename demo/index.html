@@ -13,13 +13,13 @@
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/prism.css">
         <link rel="stylesheet" href="css/main.css">       
-        <link rel="stylesheet" href="css/dropdown.css">
+        <link rel="stylesheet" href="css/asDropdown.css">
 
         <script src="js/vendor/jquery-1.9.1.min.js"></script>
         <script src="js/vendor/jquery.toc.js"></script>
         <script src="js/vendor/prism.js"></script>
         <script src="js/vendor/bootstrap.js"></script>
-        <script src="../src/jquery-dropdown.js"></script>
+        <script src="../src/jquery-asDropdown.js"></script>
         <style type="text/css">
             .example div {
                 display: inline-block;
@@ -55,7 +55,7 @@
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-example').dropdown();          
+        $('.dropdown-example').asDropdown();          
     });
 &lt;/script&gt;
 </code></pre>
@@ -71,7 +71,7 @@
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-example').dropdown({
+                        $('.dropdown-example').asDropdown({
                             select: 3
                         });          
                     });
@@ -93,7 +93,7 @@
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-onChange').dropdown({
+        $('.dropdown-onChange').asDropdown({
             panel: '.onChange',
             onChange: function($selected) {
                 console.log('selected ' + $selected.text());
@@ -114,7 +114,7 @@
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-onChange').dropdown({
+                        $('.dropdown-onChange').asDropdown({
                             panel: '.onChange',
                             onChange: function(value) {
                                 console.log('selected ' + value);
@@ -140,7 +140,7 @@
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-selector').dropdown({
+        $('.dropdown-selector').asDropdown({
             panel: '.dropdown-content'
         });          
     });
@@ -158,7 +158,7 @@
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-selector').dropdown({
+                        $('.dropdown-selector').asDropdown({
                             panel: '.dropdown-content'
                         });          
                     });
@@ -179,7 +179,7 @@
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-click').dropdown({
+        $('.dropdown-click').asDropdown({
             clickoutHide: false
         });          
     });
@@ -197,7 +197,7 @@
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-click').dropdown({
+                        $('.dropdown-click').asDropdown({
                             clickoutHide: false
                         });          
                     });
@@ -219,7 +219,7 @@
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-click').dropdown({
+        $('.dropdown-click').asDropdown({
             imitateSelect: true,
             select: 0
         });          
@@ -237,7 +237,7 @@
                 </div>
                 <script>                   
                     $(document).ready(function() {
-                        $('.dropdown-imitateSelect').dropdown({
+                        $('.dropdown-imitateSelect').asDropdown({
                             data: 'category',
                             select: 'news',
                             imitateSelect: true,

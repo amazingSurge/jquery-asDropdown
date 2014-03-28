@@ -1,7 +1,7 @@
-# jQuery dropdown
+# jQuery asDropdown
 
-The powerful jQuery plugin that creates a custom dropdown. <a href="http://amazingsurge.github.io/jquery-dropdown/">Project page and demos</a><br />
-Download: <a href="https://github.com/amazingSurge/jquery-dropdown/archive/master.zip">jquery-dropdown-master.zip</a>
+The powerful jQuery plugin that creates a custom asDropdown. <a href="http://amazingsurge.github.io/jquery-asDropdown/">Project page and demos</a><br />
+Download: <a href="https://github.com/amazingSurge/jquery-asDropdown/archive/master.zip">jquery-asDropdown-master.zip</a>
 
 ***
 
@@ -19,10 +19,10 @@ Download: <a href="https://github.com/amazingSurge/jquery-dropdown/archive/maste
 
 Import this libraries:
 * jQuery
-* jquery-dropdown.min.js
+* jquery-asDropdown.min.js
 
 And CSS:
-* jquery-dropdown.css - desirable if you have not yet connected one
+* jquery-asDropdown.css - desirable if you have not yet connected one
 
 
 Create base html element:
@@ -36,15 +36,15 @@ Create base html element:
 </select>
 ```
 
-Initialize dropdown:
+Initialize asDropdown:
 ```javascript
-$('.custom-dropdown').dropdown({skin: 'simple'});
+$('.custom-asDropdown').asDropdown({skin: 'simple'});
 ```
 
-Or initialize dropdown with custom settings:
+Or initialize asDropdown with custom settings:
 ```javascript
-$(".custom-dropdown").dropdown({
-        namespace: 'dropdown',
+$(".custom-asDropdown").asDropdown({
+        namespace: 'asDropdown',
         skin: 'simple',
         trigger: 'click', // 'hover' or 'click'
         value: 'a',
