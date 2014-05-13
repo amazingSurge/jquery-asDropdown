@@ -14,6 +14,12 @@
         this.$element = $(element);
         this.$parent = this.$element.parent();
 
+        if (this.$element.attr('name')) {
+            this.name = this.$element.attr('name');
+        } else {
+            this.name = options.name;
+        }
+
         // options
         var meta_data = [];
         $.each(this.$element.data(), function(k, v) {
@@ -82,6 +88,7 @@
         _trigger: function(eventType) {
             // event
             this.$element.trigger('asDropdown::' + eventType, this);
+            this.$element.trigger(eventType + '.asDropdown', this);
 
             // callback
             eventType = eventType.replace(/\b\w+\b/g, function(word) {
@@ -227,6 +234,7 @@
         imitateSelect: false, //let select value show in trigger bar
         select: null, //set initial select value, when imitateSelect is set to true
         data: 'value',
+        name: null,
 
         //callback comes with corresponding event
         onInit: null,

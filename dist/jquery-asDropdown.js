@@ -1,4 +1,4 @@
-/*! jquery asDropdown - v0.1.1 - 2014-03-28
+/*! jquery asDropdown - v0.1.1 - 2014-05-13
 * https://github.com/amazingSurge/jquery-asDropdown
 * Copyright (c) 2014 amazingSurge; Licensed MIT */
 /* global jQuery */
@@ -8,6 +8,12 @@
         this.element = element;
         this.$element = $(element);
         this.$parent = this.$element.parent();
+
+        if (this.$element.attr('name')) {
+            this.name = this.$element.attr('name');
+        } else {
+            this.name = options.name;
+        }
 
         // options
         var meta_data = [];
@@ -77,6 +83,7 @@
         _trigger: function(eventType) {
             // event
             this.$element.trigger('asDropdown::' + eventType, this);
+            this.$element.trigger(eventType + '.asDropdown', this);
 
             // callback
             eventType = eventType.replace(/\b\w+\b/g, function(word) {
@@ -222,6 +229,7 @@
         imitateSelect: false, //let select value show in trigger bar
         select: null, //set initial select value, when imitateSelect is set to true
         data: 'value',
+        name: null,
 
         //callback comes with corresponding event
         onInit: null,
