@@ -141,6 +141,7 @@
                 self.$panel.children().each(function() {
                     if ($(this).data(self.options.data) === value) {
                         $item = $(this);
+                        self.value = value;
                     }
                 });
                 if (!$item) {
@@ -210,6 +211,9 @@
         },
 
         // common  method
+        get: function() {
+            return this.value;
+        },
         enable: function() {
             this.disabled = false;
             this.$wrapper.removeClass(this.classes.disabled);

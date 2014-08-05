@@ -1,4 +1,4 @@
-/*! jquery asDropdown - v0.1.1 - 2014-05-13
+/*! jquery asDropdown - v0.1.1 - 2014-08-05
 * https://github.com/amazingSurge/jquery-asDropdown
 * Copyright (c) 2014 amazingSurge; Licensed MIT */
 /* global jQuery */
@@ -136,6 +136,7 @@
                 self.$panel.children().each(function() {
                     if ($(this).data(self.options.data) === value) {
                         $item = $(this);
+                        self.value = value;
                     }
                 });
                 if (!$item) {
@@ -205,6 +206,9 @@
         },
 
         // common  method
+        get: function() {
+            return this.value;
+        },
         enable: function() {
             this.disabled = false;
             this.$wrapper.removeClass(this.classes.disabled);
