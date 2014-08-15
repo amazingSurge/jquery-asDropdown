@@ -86,9 +86,11 @@
             this.initialized = true;
         },
         _trigger: function(eventType) {
+            var data = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+            data ? data.push(this) : data=this;
             // event
-            this.$element.trigger('asDropdown::' + eventType, this);
-            this.$element.trigger(eventType + '.asDropdown', this);
+            this.$element.trigger('asDropdown::' + eventType, data);
+            this.$element.trigger(eventType + '.asDropdown', data);
 
             // callback
             eventType = eventType.replace(/\b\w+\b/g, function(word) {
@@ -153,7 +155,7 @@
                 }
             }
             if (this.initialized) {
-                this._trigger('change', value);
+                this._trigger('change', value, this.name, 'asDropdown');
             }
         },
         _generateMask: function() {
