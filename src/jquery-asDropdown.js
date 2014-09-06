@@ -78,14 +78,9 @@
             this.initialized = true;
         },
         _trigger: function(eventType) {
-            var method_arguments = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : undefined,
-                data;
-            if (method_arguments) {
-                data = method_arguments;
-                data.push(this);
-            }else {
-                data = this;
-            }
+            var method_arguments = Array.prototype.slice.call(arguments, 1),
+                data = method_arguments.concat([this]);
+            
             // event
             this.$element.trigger('asDropdown::' + eventType, data);
             this.$element.trigger(eventType + '.asDropdown', data);
@@ -245,7 +240,7 @@
     $.fn.asDropdown = function(options) {
         if (typeof options === 'string') {
             var method = options;
-            var method_arguments = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : [];
+            var method_arguments = Array.prototype.slice.call(arguments, 1);
 
             if (/^\_/.test(method)) {
                 return false;
