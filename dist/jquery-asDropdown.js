@@ -1,19 +1,11 @@
-/*! jquery asDropdown - v0.1.1 - 2014-08-18
+/*! jquery asDropdown - v0.1.2 - 2014-09-05
 * https://github.com/amazingSurge/jquery-asDropdown
 * Copyright (c) 2014 amazingSurge; Licensed MIT */
-/* global jQuery */
-
 (function($) {
     var AsDropdown = $.dropdown = function(element, options) {
         this.element = element;
         this.$element = $(element);
         this.$parent = this.$element.parent();
-
-        if (this.$element.attr('name')) {
-            this.name = this.$element.attr('name');
-        } else {
-            this.name = options.name;
-        }
 
         // options
         var meta_data = [];
@@ -24,6 +16,7 @@
             }
         });
         this.options = $.extend(true, {}, AsDropdown.defaults, options, meta_data);
+
         this.namespace = this.options.namespace;
         this.classes = {
             skin: this.namespace + '_' + this.options.skin,
@@ -102,7 +95,6 @@
                 this.options[onFunction].apply(this, method_arguments);
             }
         },
-
         show: function() {
             var self = this;
             if (this.disabled) {
@@ -211,8 +203,6 @@
                 return $(this.options.panel);
             }
         },
-
-        // common  method
         get: function() {
             return this.value;
         },
@@ -240,7 +230,6 @@
         imitateSelect: false, //let select value show in trigger bar
         select: null, //set initial select value, when imitateSelect is set to true
         data: 'value',
-        name: null,
 
         //callback comes with corresponding event
         onInit: null,
@@ -252,14 +241,23 @@
     $.fn.asDropdown = function(options) {
         if (typeof options === 'string') {
             var method = options;
-            var method_arguments = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+            var method_arguments = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : [];
 
-            return this.each(function() {
-                var api = $.data(this, 'asDropdown');
-                if (typeof api[method] === 'function') {
-                    api[method].apply(api, method_arguments);
+            if (/^\_/.test(method)) {
+                return false;
+            } else if ((/^(get)$/.test(method))) {
+                var api = this.first().data('asDropdown');
+                if (api && typeof api[method] === 'function') {
+                    return api[method].apply(api, method_arguments);
                 }
-            });
+            } else {
+                return this.each(function() {
+                    var api = $.data(this, 'asDropdown');
+                    if (api && typeof api[method] === 'function') {
+                        api[method].apply(api, method_arguments);
+                    }
+                });
+            }
         } else {
             return this.each(function() {
                 if (!$.data(this, 'asDropdown')) {

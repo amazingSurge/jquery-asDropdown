@@ -1,6 +1,6 @@
 # jQuery asDropdown
 
-The powerful jQuery plugin that creates a custom asDropdown. <a href="http://amazingsurge.github.io/jquery-asDropdown/">Project page and demos</a><br />
+The powerful jQuery plugin that creates a custom asDropdown.
 Download: <a href="https://github.com/amazingSurge/jquery-asDropdown/archive/master.zip">jquery-asDropdown-master.zip</a>
 
 ***
@@ -136,16 +136,8 @@ jquery-select is verified to work in Internet Explorer 7+, Firefox 2+, Opera 9+,
 
 Mobile browsers (like Opera mini, Chrome mobile, Safari mobile, Android browser and others) is coming soon.
 
-## Changes
-
-| Version | Notes                                                            |
-|---------|------------------------------------------------------------------|
-|     ... | ...                                                              |
-
 ## Author
 [amazingSurge](http://amazingSurge.com)
 
 ## License
 jQuery-select plugin is released under the <a href="https://github.com/amazingSurge/jquery-select/blob/master/LICENCE.GPL" target="_blank">GPL licence</a>.
-
-
