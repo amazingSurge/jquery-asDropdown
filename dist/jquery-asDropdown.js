@@ -1,4 +1,4 @@
-/*! jquery asDropdown - v0.1.2 - 2014-09-06
+/*! jquery asDropdown - v0.1.2 - 2014-09-23
 * https://github.com/amazingSurge/jquery-asDropdown
 * Copyright (c) 2014 amazingSurge; Licensed MIT */
 (function($) {
@@ -141,12 +141,12 @@
                 }
             }
             if (this.initialized) {
-                this._trigger('change', value, this.name, 'asDropdown');
+                this._trigger('change', value);
             }
         },
         _generateMask: function() {
             var self = this;
-            this.$mask = $('<div></div>').addClass(this.classes.mask).appendTo(this.$parent);
+            this.$mask = $('<div></div>').addClass(this.classes.mask).show().appendTo('body');
             this.$mask.on('click.asDropdown', function() {
                 self.hide();
                 return false;
@@ -199,6 +199,9 @@
         },
         get: function() {
             return this.value;
+        },
+        update: function(html) {
+            this.$panel.html(html);
         },
         enable: function() {
             this.disabled = false;

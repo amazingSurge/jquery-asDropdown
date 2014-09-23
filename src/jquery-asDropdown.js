@@ -204,6 +204,9 @@
         get: function() {
             return this.value;
         },
+        update: function(html) {
+            this.$panel.html(html);
+        },
         enable: function() {
             this.disabled = false;
             this.$wrapper.removeClass(this.classes.disabled);
