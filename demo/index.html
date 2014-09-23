@@ -47,15 +47,17 @@
 &lt;div class=&quot;dropdown-wrap&quot;&gt;
     &lt;div class=&quot;dropdown-example&quot;&gt;click me&lt;/div&gt;
     &lt;ul&gt;
-        &lt;li&gt;items-1&lt;/li&gt;
-        &lt;li&gt;items-2&lt;/li&gt;
-        &lt;li&gt;items-3&lt;/li&gt;
-        &lt;li&gt;items-4&lt;/li&gt;
+        &lt;li data-value=&quot;1&quot;&gt;items-1&lt;/li&gt;
+        &lt;li data-value=&quot;2&quot;&gt;items-2&lt;/li&gt;
+        &lt;li data-value=&quot;3&quot;&gt;items-3&lt;/li&gt;
+        &lt;li data-value=&quot;4&quot;&gt;items-4&lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-example').asDropdown();          
+        $(&#039;.dropdown-example&#039;).asDropdown({
+            select: 3
+        });          
     });
 &lt;/script&gt;
 </code></pre>
@@ -82,23 +84,23 @@
         <section>
             <h4>onChange</h4>
             <pre class="has-example"><code class="language-javascript">
-&lt;div class=&quot;dropdown-wrap&quot;&gt;
+>&lt;div class=&quot;dropdown-wrap&quot;&gt;
     &lt;div class=&quot;dropdown-onChange&quot;&gt;click me&lt;/div&gt;
     &lt;ul class=&quot;onChange&quot;&gt;
-        &lt;li&gt;items-1&lt;/li&gt;
-        &lt;li&gt;items-2&lt;/li&gt;
-        &lt;li&gt;items-3&lt;/li&gt;
-        &lt;li&gt;items-4&lt;/li&gt;
+        &lt;li data-category=&quot;sport&quot;&gt;items-1&lt;/li&gt;
+        &lt;li data-category=&quot;news&quot;&gt;items-2&lt;/li&gt;
+        &lt;li data-category=&quot;info&quot;&gt;items-3&lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;
 &lt;script&gt;                   
     $(document).ready(function() {
-        $('.dropdown-onChange').asDropdown({
-            panel: '.onChange',
-            onChange: function($selected) {
-                console.log('selected ' + $selected.text());
+        $(&#039;.dropdown-onChange&#039;).asDropdown({
+            panel: &#039;.onChange&#039;,
+            data: &#039;category&#039;,
+            onChange: function(value) {
+                console.log(&#039;selected &#039; + value);
             }
-        });          
+        });
     });
 &lt;/script&gt;
 </code></pre>
@@ -116,10 +118,11 @@
                     $(document).ready(function() {
                         $('.dropdown-onChange').asDropdown({
                             panel: '.onChange',
+                            data: 'category',
                             onChange: function(value) {
                                 console.log('selected ' + value);
                             }
-                        });          
+                        });
                     });
                 </script>
             </div>

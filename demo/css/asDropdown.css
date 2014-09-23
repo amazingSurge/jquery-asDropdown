@@ -4,7 +4,15 @@
 .asDropdown-panel {
   display: none;
   position: absolute;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   z-index: 101;
+  cursor: default;
+}
+.asDropdown_show {
+  display: block;
 }
 .asDropdown-mask {
   position: fixed;
@@ -14,7 +22,4 @@
   height: 100%;
   z-index: 100;
   display: none;
-}
-.asDropdown-panel.asDropdown_show {
-  display: block;
 }
