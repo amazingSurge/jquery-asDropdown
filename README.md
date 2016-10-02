@@ -1,143 +1,254 @@
-# jQuery asDropdown
+# [jQuery asDropdown](https://github.com/amazingSurge/jquery-asDropdown) ![bower][bower-image] [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url] [![prs-welcome]](#contributing)
 
-The powerful jQuery plugin that creates a custom asDropdown.
-Download: <a href="https://github.com/amazingSurge/jquery-asDropdown/archive/master.zip">jquery-asDropdown-master.zip</a>
+> A jquery plugin that creates a custom dropdown.
 
-***
+## Table of contents
+- [Main files](#main-files)
+- [Quick start](#quick-start)
+- [Requirements](#requirements)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Options](#options)
+- [Methods](#methods)
+- [Events](#events)
+- [No conflict](#no-conflict)
+- [Browser support](#browser-support)
+- [Contributing](#contributing)
+- [Development](#development)
+- [Changelog](#changelog)
+- [Copyright and license](#copyright-and-license)
 
-## Features
+## Main files
+```
+dist/
+├── jquery-asDropdown.js
+├── jquery-asDropdown.es.js
+├── jquery-asDropdown.min.js
+└── css/
+    ├── asDropdown.css
+    └── asDropdown.min.css
+```
 
-* **Extremely fast**
-* **Option group support**
-* **Javascript only 4KB compressed**
-* **Lightweight size** — 1 kb gzipped
+## Quick start
+Several quick start options are available:
+#### Download the latest build
 
-## Dependencies
-* <a href="http://jquery.com/" target="_blank">jQuery 1.83+</a>
+ * [Development](https://raw.githubusercontent.com/amazingSurge/jquery-asDropdown/master/dist/jquery-asDropdown.js) - unminified
+ * [Production](https://raw.githubusercontent.com/amazingSurge/jquery-asDropdown/master/dist/jquery-asDropdown.min.js) - minified
+
+#### Install From Bower
+```sh
+bower install jquery-asDropdown --save
+```
+
+#### Install From Npm
+```sh
+npm install jquery-asDropdown --save
+```
+
+#### Build From Source
+If you want build from source:
+
+```sh
+git clone git@github.com:amazingSurge/jquery-asDropdown.git
+cd jquery-asDropdown
+npm install
+npm install -g gulp-cli babel-cli
+gulp build
+```
+
+Done!
+
+## Requirements
+`jquery-asDropdown` requires the latest version of [`jQuery`](https://jquery.com/download/).
 
 ## Usage
+#### Including files:
 
-Import this libraries:
-* jQuery
-* jquery-asDropdown.min.js
-
-And CSS:
-* jquery-asDropdown.css - desirable if you have not yet connected one
-
-
-Create base html element:
 ```html
-<select class="custom-select">
-    <option value="a">beijing</option>
-    <option value="b">fujian</option>
-    <option value="c">zhejiang</option>
-    <option value="d">tianjin</option>
-    <option value="e">shanghai</option>
-</select>
+<link rel="stylesheet" href="/path/to/asDropdown.css">
+<script src="/path/to/jquery.js"></script>
+<script src="/path/to/jquery-asDropdown.js"></script>
 ```
 
-Initialize asDropdown:
-```javascript
-$('.custom-asDropdown').asDropdown({skin: 'simple'});
+#### Required HTML structure
+
+```html
+<div class="dropdown-wrap">
+    <div class="dropdown-example">click me</div>
+    <ul>
+        <li data-value="1">items-1</li>
+        <li data-value="2">items-2</li>
+        <li data-value="3">items-3</li>
+        <li data-value="4">items-4</li>
+    </ul>
+</div>
 ```
 
-Or initialize asDropdown with custom settings:
+#### Initialization
+All you need to do is call the plugin on the element:
+
 ```javascript
-$(".custom-asDropdown").asDropdown({
-        namespace: 'asDropdown',
-        skin: 'simple',
-        trigger: 'click', // 'hover' or 'click'
-        value: 'a',
-        offset: [0, 0],
-        status: {
-            a: 'beijing',
-            b: 'fujian',
-            c: 'zhejiang'
-        },
-        onChange: function() {}
+jQuery(function($) {
+  $('.dropdown-example').asDropdown(); 
 });
 ```
 
+## Examples
+There are some example usages that you can look at to get started. They can be found in the
+[examples folder](https://github.com/amazingSurge/jquery-asDropdown/tree/master/examples).
 
+## Options
+`jquery-asDropdown` can accept an options object to alter the way it behaves. You can see the default options by call `$.asDropdown.setDefaults()`. The structure of an options object is as follows:
 
-## Settings
+```
+{
+  namespace: 'asDropdown',
+  skin: null,
+  panel: '+', //jquery selector to find content in the page, or '+' means adjacent siblings
+  clickoutHide: true, //When clicking outside of the dropdown, trigger hide event
+  imitateSelect: false, //let select value show in trigger bar
+  select: null, //set initial select value, when imitateSelect is set to true
+  data: 'value',
 
-```javascript
-    //Optional property,set a namspace for css class, for example, we have <code>.select_active
-    //</code> class for active effect, if namespace set to 'as-select', then it will be <code>.
-    //as-select_active</code>
-    namespace: '.select',
-
-    //Optional property, set transition effect, it works after you load specified skin file
-    skin: 'simple',
-
-    //Optional property, the way to active select, optioal 'hover
-    trigger: 'click',
-
-    //Optional property, set the value of bar that element have no option when select initilized
-    value: 'a',
-
-    //Optional property, set the offset between bar and comment
-    offset: [0,0]
-
-    //Optional property, set the status of elements,for example 
-    //<code>a:beijing</code> means the element's value is 'a',
-    //the text is 'beijing'
-    status: {
-         a: 'beijing',
-         b: 'fujian',
-         c: 'zhejiang'
-    },
-
-    //callback when element is seted refresh
-    Onchange: function(){}
+  //callback comes with corresponding event
+  onInit: null,
+  onShow: null,
+  onHide: null,
+  onChange: null
+}
 ```
 
-## Public methods
+## Methods
+Methods are called on asDropdown instances through the asDropdown method itself.
+You can also save the instances to variable for further use.
 
-jquery select has different methods , we can use it as below :
 ```javascript
-// show comment
-$(".custom-select").select("show");
+// call directly
+$().asDropdown('destory');
 
-// hide comment
-$(".custom-select").select("hide");
-
-// set element's status
-$(".custom-select").select("set");
-
-// get option's value
-$(".custom-select").select("get");
-
-// bar enable be actived
-$(".custom-select").select("enable");
-
-// bar can't be actived 
-$(".custom-select").select("disable");
-
-// remove all event
-$(".custom-select").select("destroy");
+// or
+var api = $().data('asDropdown');
+api.destory();
 ```
 
-## Event / Callback
-
-* <code>change</code>: trigger when select chage
-
-how to use event:
+#### get()
+Get the dropdown value.
 ```javascript
-$(document).on('change', function(event,instance) {
-    // instance means current select instance 
-    // some stuff
+var val = $().asDropdown('get');
+```
+
+#### show()
+Show the dropdown functions.
+```javascript
+$().asDropdown('show');
+```
+
+#### hide()
+Hide the dropdown functions.
+```javascript
+$().asDropdown('hide');
+```
+
+#### enable()
+Enable the dropdown functions.
+```javascript
+$().asDropdown('enable');
+```
+
+#### disable()
+Disable the dropdown functions.
+```javascript
+$().asDropdown('disable');
+```
+
+#### destroy()
+Destroy the dropdown instance.
+```javascript
+$().asDropdown('destroy');
+```
+
+## Events
+`jquery-asDropdown` provides custom events for the plugin’s unique actions. 
+
+```javascript
+$('.the-element').on('asDropdown::ready', function (e) {
+  // on instance ready
 });
+
+```
+
+Event   | Description
+------- | -----------
+init    | Fires when the instance is setup for the first time.
+ready   | Fires when the instance is ready for API use.
+enable  | This event is fired immediately when the `enable` instance method has been called.
+disable | This event is fired immediately when the `disable` instance method has been called.
+destroy | Fires when an instance is destroyed. 
+
+## No conflict
+If you have to use other plugin with the same namespace, just call the `$.asDropdown.noConflict` method to revert to it.
+
+```html
+<script src="other-plugin.js"></script>
+<script src="jquery-asDropdown.js"></script>
+<script>
+  $.asDropdown.noConflict();
+  // Code that uses other plugin's "$().asDropdown" can follow here.
+</script>
 ```
 
 ## Browser support
-jquery-select is verified to work in Internet Explorer 7+, Firefox 2+, Opera 9+, Google Chrome and Safari browsers. Should also work in many others.
 
-Mobile browsers (like Opera mini, Chrome mobile, Safari mobile, Android browser and others) is coming soon.
+Tested on all major browsers.
 
-## Author
-[amazingSurge](http://amazingSurge.com)
+| <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/safari/safari_32x32.png" alt="Safari"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/chrome/chrome_32x32.png" alt="Chrome"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/firefox/firefox_32x32.png" alt="Firefox"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/edge/edge_32x32.png" alt="Edge"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/internet-explorer/internet-explorer_32x32.png" alt="IE"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/opera/opera_32x32.png" alt="Opera"> |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| Latest ✓ | Latest ✓ | Latest ✓ | Latest ✓ | 9-11 ✓ | Latest ✓ |
 
-## License
-jQuery-select plugin is released under the <a href="https://github.com/amazingSurge/jquery-select/blob/master/LICENCE.GPL" target="_blank">GPL licence</a>.
+As a jQuery plugin, you also need to see the [jQuery Browser Support](http://jquery.com/browser-support/).
+
+## Contributing
+Anyone and everyone is welcome to contribute. Please take a moment to
+review the [guidelines for contributing](CONTRIBUTING.md). Make sure you're using the latest version of `jquery-asDropdown` before submitting an issue. There are several ways to help out:
+
+* [Bug reports](CONTRIBUTING.md#bug-reports)
+* [Feature requests](CONTRIBUTING.md#feature-requests)
+* [Pull requests](CONTRIBUTING.md#pull-requests)
+* Write test cases for open bug issues
+* Contribute to the documentation
+
+## Development
+`jquery-asDropdown` is built modularly and uses Gulp as a build system to build its distributable files. To install the necessary dependencies for the build system, please run:
+
+```sh
+npm install -g gulp
+npm install -g babel-cli
+npm install
+```
+
+Then you can generate new distributable files from the sources, using:
+```
+gulp build
+```
+
+More gulp tasks can be found [here](CONTRIBUTING.md#available-tasks).
+
+## Changelog
+To see the list of recent changes, see [Releases section](https://github.com/amazingSurge/jquery-asDropdown/releases).
+
+## Copyright and license
+Copyright (C) 2016 amazingSurge.
+
+Licensed under [the LGPL license](LICENSE).
+
+[⬆ back to top](#table-of-contents)
+
+[bower-image]: https://img.shields.io/bower/v/jquery-asDropdown.svg?style=flat
+[bower-link]: https://david-dm.org/amazingSurge/jquery-asDropdown/dev-status.svg
+[npm-image]: https://badge.fury.io/js/jquery-asDropdown.svg?style=flat
+[npm-url]: https://npmjs.org/package/jquery-asDropdown
+[license]: https://img.shields.io/npm/l/jquery-asDropdown.svg?style=flat
+[prs-welcome]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
+[daviddm-image]: https://david-dm.org/amazingSurge/jquery-asDropdown.svg?style=flat
+[daviddm-url]: https://david-dm.org/amazingSurge/jquery-asDropdown

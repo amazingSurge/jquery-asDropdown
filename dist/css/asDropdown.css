@@ -1,0 +1,35 @@
+/**
+* jquery asDropdown v0.2.0
+* https://github.com/amazingSurge/jquery-asDropdown
+*
+* Copyright (c) amazingSurge
+* Released under the LGPL-3.0 license
+*/
+.asDropdown-wrapper {
+  position: relative;
+}
+
+.asDropdown-panel {
+  position: absolute;
+  z-index: 101;
+  display: none;
+  cursor: default; 
+  -webkit-user-select: none; 
+     -moz-user-select: none; 
+      -ms-user-select: none; 
+          user-select: none;
+}
+
+.asDropdown_show {
+  display: block;
+}
+
+.asDropdown-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: none; 
+  width: 100%;
+  height: 100%;
+}
