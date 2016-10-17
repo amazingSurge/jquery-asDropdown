@@ -1,6 +1,6 @@
 {
   "name": "jquery-asDropdown",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A jquery plugin that creates a custom dropdown.",
   "main": "dist/jquery-asDropdown.js",
   "copyright": "amazingSurge",

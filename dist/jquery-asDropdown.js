@@ -1,5 +1,5 @@
 /**
-* jquery asDropdown v0.2.0
+* jquery asDropdown v0.2.1
 * https://github.com/amazingSurge/jquery-asDropdown
 *
 * Copyright (c) amazingSurge
@@ -104,18 +104,18 @@
         this.$parent = this.$element.parent();
 
         // options
-        var meta_data = [];
+        var metas = [];
         _jquery2.default.each(this.$element.data(),
 
           function(k, v) {
             var re = new RegExp("^asDropdown", "i");
 
             if (re.test(k)) {
-              meta_data[k.toLowerCase().replace(re, '')] = v;
+              metas[k.toLowerCase().replace(re, '')] = v;
             }
           }
         );
-        this.options = _jquery2.default.extend({}, DEFAULTS, options, meta_data);
+        this.options = _jquery2.default.extend({}, DEFAULTS, options, metas);
 
         this.namespace = this.options.namespace;
         this.classes = {
@@ -151,7 +151,7 @@
       _createClass(asDropdown, [{
         key: 'init',
         value: function init() {
-          var self = this;
+          var that = this;
           this.$parent.addClass(this.classes.wrapper);
           this.$element.addClass(this.namespace).addClass(this.classes.trigger);
           this.$panel.addClass(this.classes.panel);
@@ -159,7 +159,7 @@
           this.$element.on(this.eventName('click'),
 
             function() {
-              self.toggle.call(self);
+              that.toggle();
 
               return false;
             }
@@ -168,8 +168,8 @@
           this.$panel.on(this.eventName('click'), 'li',
 
             function() {
-              self.set((0, _jquery2.default)(this).data(self.options.data));
-              self.hide();
+              that.set((0, _jquery2.default)(this).data(that.options.data));
+              that.hide();
 
               return false;
             }
@@ -185,13 +185,11 @@
       }, {
         key: '_trigger',
         value: function _trigger(eventType) {
-          var _ref;
-
           for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
             params[_key - 1] = arguments[_key];
           }
 
-          var data = (_ref = [this]).concat.apply(_ref, params);
+          var data = [this].concat(params);
 
           // event
           this.$element.trigger(NAMESPACE$1 + '::' + eventType, data);
@@ -206,9 +204,7 @@
           var onFunction = 'on' + eventType;
 
           if (typeof this.options[onFunction] === 'function') {
-            var _options$onFunction;
-
-            (_options$onFunction = this.options[onFunction]).apply.apply(_options$onFunction, [this].concat(params));
+            this.options[onFunction].apply(this, params);
           }
         }
       }, {
@@ -231,7 +227,7 @@
       }, {
         key: 'show',
         value: function show() {
-          var self = this;
+          var that = this;
 
           if (this.disabled) {
 
@@ -245,7 +241,7 @@
           (0, _jquery2.default)(window).on(this.eventName('resize'),
 
             function() {
-              self._position();
+              that._position();
 
               return false;
             }
@@ -280,14 +276,14 @@
           if (this.options.imitateSelect) {
             var _ret = function() {
               var $item = null;
-              var self = _this;
+              var that = _this;
 
-              self.$panel.children().each(
+              that.$panel.children().each(
 
                 function() {
-                  if ((0, _jquery2.default)(this).data(self.options.data) === value) {
+                  if ((0, _jquery2.default)(this).data(that.options.data) === value) {
                     $item = (0, _jquery2.default)(this);
-                    self.value = value;
+                    that.value = value;
                   }
                 }
               );
@@ -311,18 +307,18 @@
           }
 
           if (this.initialized) {
-            this._trigger('change', [value]);
+            this._trigger('change', value);
           }
         }
       }, {
         key: '_generateMask',
         value: function _generateMask() {
-          var self = this;
+          var that = this;
           this.$mask = (0, _jquery2.default)('<div></div>').addClass(this.classes.mask).show().appendTo('body');
           this.$mask.on(this.eventName('click'),
 
             function() {
-              self.hide();
+              that.hide();
 
               return false;
             }
@@ -380,10 +376,9 @@
           if (string.includes('+')) {
 
             return this.$element.next();
-          } else {
-
-            return (0, _jquery2.default)(this.options.panel);
           }
+
+          return (0, _jquery2.default)(this.options.panel);
         }
       }, {
         key: 'get',
@@ -408,8 +403,8 @@
           this.$wrapper.addClass(this.classes.disabled);
         }
       }, {
-        key: 'destory',
-        value: function destory() {
+        key: 'destroy',
+        value: function destroy() {
           this.hide();
           this.$element.off(this.eventName());
           this.$element.remove();
@@ -426,13 +421,13 @@
     }();
 
     var info = {
-      version: '0.2.0'
+      version: '0.2.1'
     };
 
     var NAMESPACE = 'asDropdown';
-    var OtherAsScrollbar = _jquery2.default.fn.asDropdown;
+    var OtherAsDropdown = _jquery2.default.fn.asDropdown;
 
-    var jQueryasDropdown = function jQueryasDropdown(options) {
+    var jQueryAsDropdown = function jQueryAsDropdown(options) {
       var _this2 = this;
 
       for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
@@ -489,14 +484,14 @@
       );
     };
 
-    _jquery2.default.fn.asDropdown = jQueryasDropdown;
+    _jquery2.default.fn.asDropdown = jQueryAsDropdown;
 
     _jquery2.default.asDropdown = _jquery2.default.extend({
       setDefaults: asDropdown.setDefaults,
       noConflict: function noConflict() {
-        _jquery2.default.fn.asDropdown = OtherAsScrollbar;
+        _jquery2.default.fn.asDropdown = OtherAsDropdown;
 
-        return jQueryasDropdown;
+        return jQueryAsDropdown;
       }
     }, info);
   }

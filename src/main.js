@@ -3,9 +3,9 @@ import asDropdown from './asDropdown';
 import info from './info';
 
 const NAMESPACE = 'asDropdown';
-const OtherAsScrollbar = $.fn.asDropdown;
+const OtherAsDropdown = $.fn.asDropdown;
 
-const jQueryasDropdown = function(options, ...args) {
+const jQueryAsDropdown = function(options, ...args) {
   if (typeof options === 'string') {
     const method = options;
 
@@ -33,12 +33,12 @@ const jQueryasDropdown = function(options, ...args) {
   });
 };
 
-$.fn.asDropdown = jQueryasDropdown;
+$.fn.asDropdown = jQueryAsDropdown;
 
 $.asDropdown = $.extend({
   setDefaults: asDropdown.setDefaults,
   noConflict: function() {
-    $.fn.asDropdown = OtherAsScrollbar;
-    return jQueryasDropdown;
+    $.fn.asDropdown = OtherAsDropdown;
+    return jQueryAsDropdown;
   }
 }, info);

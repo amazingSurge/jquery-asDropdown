@@ -1,5 +1,5 @@
 /**
-* jquery asDropdown v0.2.0
+* jquery asDropdown v0.2.1
 * https://github.com/amazingSurge/jquery-asDropdown
 *
 * Copyright (c) amazingSurge
@@ -35,14 +35,14 @@ class asDropdown {
     this.$parent = this.$element.parent();
 
     // options
-    const meta_data = [];
+    const metas = [];
     $.each(this.$element.data(), (k, v) => {
       const re = new RegExp("^asDropdown", "i");
       if (re.test(k)) {
-        meta_data[k.toLowerCase().replace(re, '')] = v;
+        metas[k.toLowerCase().replace(re, '')] = v;
       }
     });
-    this.options = $.extend( {}, DEFAULTS, options, meta_data);
+    this.options = $.extend( {}, DEFAULTS, options, metas);
 
     this.namespace = this.options.namespace;
     this.classes = {
@@ -75,19 +75,19 @@ class asDropdown {
   }
 
   init() {
-    const self = this;
+    const that = this;
     this.$parent.addClass(this.classes.wrapper);
     this.$element.addClass(this.namespace).addClass(this.classes.trigger);
     this.$panel.addClass(this.classes.panel);
 
     this.$element.on(this.eventName('click'), () => {
-      self.toggle.call(self);
+      that.toggle();
       return false;
     });
 
     this.$panel.on(this.eventName('click'), 'li', function() {
-      self.set($(this).data(self.options.data));
-      self.hide();
+      that.set($(this).data(that.options.data));
+      that.hide();
       return false;
     });
 
@@ -100,7 +100,7 @@ class asDropdown {
   }
 
   _trigger(eventType, ...params) {
-    let data = [this].concat(...params);
+    let data = [this].concat(params);
 
     // event
     this.$element.trigger(`${NAMESPACE$1}::${eventType}`, data);
@@ -112,7 +112,7 @@ class asDropdown {
     let onFunction = `on${eventType}`;
 
     if (typeof this.options[onFunction] === 'function') {
-      this.options[onFunction].apply(this, ...params);
+      this.options[onFunction].apply(this, params);
     }
   }
 
@@ -130,7 +130,7 @@ class asDropdown {
   }
 
   show() {
-    const self = this;
+    const that = this;
     if (this.disabled) {
       return;
     }
@@ -139,7 +139,7 @@ class asDropdown {
     }
 
     $(window).on(this.eventName('resize'), () => {
-      self._position();
+      that._position();
       return false;
     });
     this.isShow = true;
@@ -166,12 +166,12 @@ class asDropdown {
   set(value) {
     if (this.options.imitateSelect) {
       let $item = null;
-      const self = this;
+      const that = this;
 
-      self.$panel.children().each(function() {
-        if ($(this).data(self.options.data) === value) {
+      that.$panel.children().each(function() {
+        if ($(this).data(that.options.data) === value) {
           $item = $(this);
-          self.value = value;
+          that.value = value;
         }
       });
       if (!$item) {
@@ -183,15 +183,15 @@ class asDropdown {
       }
     }
     if (this.initialized) {
-      this._trigger('change', [value]);
+      this._trigger('change', value);
     }
   }
 
   _generateMask() {
-    const self = this;
+    const that = this;
     this.$mask = $('<div></div>').addClass(this.classes.mask).show().appendTo('body');
     this.$mask.on(this.eventName('click'), () => {
-      self.hide();
+      that.hide();
       return false;
     });
   }
@@ -241,9 +241,8 @@ class asDropdown {
   _parse(string) {
     if (string.includes('+')) {
       return this.$element.next();
-    } else {
-      return $(this.options.panel);
     }
+    return $(this.options.panel);
   }
 
   get() {
@@ -264,7 +263,7 @@ class asDropdown {
     this.$wrapper.addClass(this.classes.disabled);
   }
 
-  destory() {
+  destroy() {
     this.hide();
     this.$element.off(this.eventName());
     this.$element.remove();
@@ -277,13 +276,13 @@ class asDropdown {
 }
 
 var info = {
-  version:'0.2.0'
+  version:'0.2.1'
 };
 
 const NAMESPACE = 'asDropdown';
-const OtherAsScrollbar = $.fn.asDropdown;
+const OtherAsDropdown = $.fn.asDropdown;
 
-const jQueryasDropdown = function(options, ...args) {
+const jQueryAsDropdown = function(options, ...args) {
   if (typeof options === 'string') {
     const method = options;
 
@@ -311,12 +310,12 @@ const jQueryasDropdown = function(options, ...args) {
   });
 };
 
-$.fn.asDropdown = jQueryasDropdown;
+$.fn.asDropdown = jQueryAsDropdown;
 
 $.asDropdown = $.extend({
   setDefaults: asDropdown.setDefaults,
   noConflict: function() {
-    $.fn.asDropdown = OtherAsScrollbar;
-    return jQueryasDropdown;
+    $.fn.asDropdown = OtherAsDropdown;
+    return jQueryAsDropdown;
   }
 }, info);
