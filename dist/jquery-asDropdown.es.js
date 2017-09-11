@@ -1,5 +1,5 @@
 /**
-* jquery asDropdown v0.2.1
+* jquery asDropdown v0.2.2
 * https://github.com/amazingSurge/jquery-asDropdown
 *
 * Copyright (c) amazingSurge
@@ -276,7 +276,7 @@ class asDropdown {
 }
 
 var info = {
-  version:'0.2.1'
+  version:'0.2.2'
 };
 
 const NAMESPACE = 'asDropdown';
